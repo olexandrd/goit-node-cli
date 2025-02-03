@@ -20,15 +20,33 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "get":
-      getContactById(id).then(console.table);
+      getContactById(id).then(contact => {
+        if (contact) {
+          console.table(contact);
+        } else {
+          console.log("null");
+        }
+      });
       break;
 
     case "add":
-      addContact(name, email, phone).then(console.table);
+      addContact(name, email, phone).then(contact => {
+        if (contact) {
+          console.table(contact);
+        } else {
+          console.log("null");
+        }
+      });
       break;
 
     case "remove":
-      removeContact(id).then(console.table);
+      removeContact(id).then(contact => {
+        if (contact) {
+          console.table(contact);
+        } else {
+          console.log("null");
+        }
+      });
       break;
 
     default:
