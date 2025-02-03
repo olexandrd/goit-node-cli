@@ -31,7 +31,19 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-  // ...твій код. Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
+    try {
+        const contacts = await listContacts();
+        const idx = contacts.findIndex(({ id }) => id === contactId);
+        if (idx === -1) {
+            return null;
+        }
+        const [contact] = contacts.splice(idx, 1);
+        await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+        return contact;
+    } catch (error) {
+        console.error('Error writing file contacts.json');
+        return null;
+    }
 }
 
 async function addContact(name, email, phone) {
