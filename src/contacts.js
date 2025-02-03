@@ -19,7 +19,14 @@ async function listContacts() {
 }
 
 async function getContactById(contactId) {
-  // ...твій код. Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
+  try {
+    const contacts = await listContacts();
+    const contact = contacts.find(({ id }) => id === contactId);
+    return contact;
+  } catch (error) {
+    console.error('Error reading file contacts.json');
+    return null;
+  }
 }
 
 async function removeContact(contactId) {

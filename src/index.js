@@ -20,7 +20,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "get":
-      // ... id
+      getContactById(id).then(console.table);
       break;
 
     case "add":
