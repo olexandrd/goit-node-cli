@@ -1,12 +1,8 @@
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { v4 as uuidv4 } from 'uuid';
+import { promises as fs } from 'node:fs';
+import { join } from 'node:path';
+import { hexoid }  from 'hexoid';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const contactsPath = join(__dirname, 'db', 'contacts.json');
+const contactsPath = join(process.cwd(), 'db', 'contacts.json');
 
 async function listContacts() {
     try {
@@ -49,7 +45,8 @@ async function removeContact(contactId) {
 async function addContact(name, email, phone) {
     try {
         const contacts = await listContacts();
-        const newContact = { id: uuidv4(), name, email, phone };
+        const id = hexoid();
+        const newContact = { id: id(), name, email, phone };
         contacts.push(newContact);
         await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
         return newContact;

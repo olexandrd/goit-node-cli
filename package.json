@@ -19,7 +19,6 @@
   "homepage": "https://github.com/olexandrd/goit-node-cli#readme",
   "dependencies": {
     "commander": "^13.1.0",
-    "uuid": "^11.0.5",
-    "uuidv4": "^6.2.13"
+    "hexoid": "^2.0.0"
   }
 }
