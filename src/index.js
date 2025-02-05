@@ -1,5 +1,10 @@
 import { program } from "commander";
-import { listContacts, getContactById, removeContact, addContact } from "./contacts.js";
+import {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+} from "./contacts.js";
 
 program
   .option("-a, --action <type>", "choose action")
@@ -12,42 +17,31 @@ program.parse();
 
 const options = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
-    case "list":
-      listContacts().then(console.table);
+    case "list": {
+      const contacts = await listContacts();
+      console.table(contacts);
       break;
+    }
 
-    case "get":
-      getContactById(id).then(contact => {
-        if (contact) {
-          console.table(contact);
-        } else {
-          console.log("null");
-        }
-      });
+    case "get": {
+      const contact = await getContactById(id);
+      contact ? console.table(contact) : console.log("null");
       break;
+    }
 
-    case "add":
-      addContact(name, email, phone).then(contact => {
-        if (contact) {
-          console.table(contact);
-        } else {
-          console.log("null");
-        }
-      });
+    case "add": {
+      const contact = await addContact(name, email, phone);
+      contact ? console.table(contact) : console.log("null");
       break;
+    }
 
-    case "remove":
-      removeContact(id).then(contact => {
-        if (contact) {
-          console.table(contact);
-        } else {
-          console.log("null");
-        }
-      });
+    case "remove": {
+      const contact = await removeContact(id);
+      contact ? console.table(contact) : console.log("null");
       break;
+    }
 
     default:
       console.warn("\x1B[31m Unknown action type!");
